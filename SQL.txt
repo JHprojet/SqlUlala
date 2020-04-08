@@ -1148,6 +1148,22 @@ CREATE PROCEDURE SP_VerifUtilisateur
 	@isOk bit OUTPUT
 AS SET @isOk = 0; IF EXISTS(SELECT Pseudo FROM Utilisateurs WHERE Pseudo = @Pseudo AND Password = dbo.SF_HashPassword(@Password)) SET @isOk = 1
 
+--Changement mot de passe
+CREATE PROCEDURE SP_ChangePassword
+	@Id INT,
+	@NewPassword NVARCHAR(MAX),
+	@IsOk bit OUTPUT
+AS 
+  IF EXISTS(SELECT Id FROM Utilisateurs WHERE Id = @Id) 
+	BEGIN
+	SET @IsOk = 1;
+	UPDATE Utilisateurs SET Password  = dbo.SF_HashPassword(@NewPassword) WHERE Id = @Id
+	END
+  ELSE
+	BEGIN
+	SET @isOk = 0
+	END
+
 --Update Token si bon token reçu
 CREATE PROCEDURE SP_UpdateToken
 	@Id INT,
@@ -1163,6 +1179,35 @@ AS
 		BEGIN
 		SET @isOK = 0;
 		END
+
+-- Renvoi d'un nouveau password auto généré
+CREATE PROCEDURE SP_NouveauPassword
+	@Mail VARCHAR(MAX),
+	@IsOk bit OUTPUT
+AS
+DECLARE @minLength INT = 10,
+    @maxLength INT = 12,
+    @base VARCHAR(180) = 'Suite à votre demande, vous trouverez votre nouveau mot de passe ci-après. Vous pouvez vous connecter et le changer dans la rubrique Mes infos>Changer mon mot de passe : ',
+    @chars VARCHAR(200) = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    @randomString VARCHAR(20) = '',
+	@tot VARCHAR(MAX) =''
+	IF EXISTS(SELECT Mail FROM Utilisateurs WHERE Mail = @Mail) 
+	BEGIN
+		DECLARE @stringLength INT = dbo.FN_RandIntBetween(@minLength, @maxLength, RAND());
+    		SET @randomString = '';
+    		WHILE LEN(@randomString) < @stringLength
+    		BEGIN
+        		SET @randomString = @randomString + dbo.FN_PickRandomChar(@chars, RAND());
+    		END
+		UPDATE Utilisateurs SET Password = dbo.SF_HashPassword(@randomString) WHERE Mail = (SELECT Mail FROM Utilisateurs WHERE Mail = @Mail)
+		SET @tot = @base + @randomString;
+		EXEC msdb.dbo.sp_send_dbmail @profile_name ='Ulala Admin Profile5',
+		@recipients = @Mail,
+		@subject ='Votre nouveau mot de passe',
+		@body = @tot
+		SET @IsOk = 1
+	END
+	ELSE SET @IsOk = 0;
 
 --Ajout Boss
 CREATE PROCEDURE SP_AjoutBoss
@@ -1356,12 +1401,11 @@ EXEC msdb.dbo.sp_send_dbmail @profile_name ='Ulala Admin Profile',
 @subject ='Lien d''activation',
 @body = @token
 
-
 ---------------
 -- FONCTIONS --
 ---------------
 
---Fonction de HAsh de password
+--Fonction de Hash de password
 CREATE FUNCTION SF_HashPassword
 (
 	@Password varchar(64)
