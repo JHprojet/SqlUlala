@@ -1132,14 +1132,21 @@ CREATE PROCEDURE SP_AjoutUtilisateur
 	@Password NVARCHAR(64)
 AS INSERT INTO Utilisateurs (Pseudo, Mail, Password, Role) VALUES (@Pseudo, @Mail, dbo.SF_HashPassword(@Password), 'User')
 
+--Activer/desactiver Utilisateur
+CREATE PROCEDURE SP_AdminUtilisateur
+@Id int,
+@Actif int,
+@Role varchar(50)
+AS UPDATE Utilisateurs SET Actif = @Actif, Role = @Role WHERE Id = @Id
+
 --Modif utilisateur
 CREATE PROCEDURE SP_ModifUtilisateur
 	@Id int,
 	@Pseudo VARCHAR(20),
 	@Mail VARCHAR(100),
-	@Password NVARCHAR(64),
-	@Role VARCHAR(20)
-AS UPDATE Utilisateurs SET Pseudo = @Pseudo, Mail = @Mail,Password = dbo.SF_HashPassword(@Password), Role = @Role WHERE Id = @Id
+	@Role VARCHAR(20),
+	@Actif INT
+AS UPDATE Utilisateurs SET Pseudo = @Pseudo, Mail = @Mail, Role = @Role, Actif = @Actif WHERE Id = @Id
 
 --Verification existante Pseudo et match du mot de passe
 CREATE PROCEDURE SP_VerifUtilisateur
@@ -1204,6 +1211,27 @@ DECLARE @minLength INT = 10,
 		EXEC msdb.dbo.sp_send_dbmail @profile_name ='Ulala Admin Profile5',
 		@recipients = @Mail,
 		@subject ='Votre nouveau mot de passe',
+		@body = @tot
+		SET @IsOk = 1
+	END
+	ELSE SET @IsOk = 0;
+
+-- Renvoi pseudo par mail
+CREATE PROCEDURE SP_RetrievePseudo
+	@Mail VARCHAR(MAX),
+	@IsOk bit OUTPUT
+AS
+DECLARE @base VARCHAR(180) = 'Suite à votre demande, vous trouverez votre pseudo sur le site Ulala-strat pour vous connecter : ',
+	@pseudo VARCHAR (50) = (SELECT Pseudo FROM Utilisateurs WHERE Mail = @Mail),
+	@tot VARCHAR(MAX) = ''
+	SET @tot = @base + @pseudo
+	IF EXISTS(SELECT Mail FROM Utilisateurs WHERE Mail = @Mail) 
+	BEGIN
+	
+		SET @tot = @base + @pseudo;
+		EXEC msdb.dbo.sp_send_dbmail @profile_name ='Ulala Admin Profile',
+		@recipients = @Mail,
+		@subject ='Votre pseudo sur le site Ulala-strat',
 		@body = @tot
 		SET @IsOk = 1
 	END
