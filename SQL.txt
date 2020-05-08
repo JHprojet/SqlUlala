@@ -13,6 +13,7 @@ GO
 
 CREATE DATABASE Ulala
 GO
+
 ---------------------
 -- CREATION TABLES --
 ---------------------
@@ -189,6 +190,8 @@ COMMIT TRANSACTION
 -- INSERTION DONNEES --
 -----------------------
 
+-- DONNEES BRUTES LIEES AU JEU + INSERTIONS DE TESTS
+
 USE Ulala;  
 GO 
 
@@ -265,7 +268,7 @@ INSERT INTO Boss (NomEN, NomFR) VALUES ('Titanothere','Brontotheride');
 INSERT INTO Boss (NomEN, NomFR) VALUES ('Darknight Allosaurus','Allosaure Noctambule');
 INSERT INTO Boss (NomEN, NomFR) VALUES ('AREMPLIR','Brontosaure argyroptere');
 INSERT INTO Boss (NomEN, NomFR) VALUES ('Flame Scar-Bunny','Lapin balafré de flammes');
--- OK -- MANQUE BOSS APRES ANCIENT RUINS ET UNE TRAD EN --
+-- OK -- MANQUE ENCORE DES BOSS APRES ANCIENTS RUINS ET UNE TRAD EN --
 GO
 
 INSERT INTO Zones (ContinentEN, ZoneEN, ContinentFR, ZoneFR, NbZones) VALUES ('Fire','Primitive Plain','Feu','Plaines Primitives','20');
@@ -519,14 +522,13 @@ INSERT INTO Jouets (NomFR, NomEN, ImagePath) VALUES ('Warg King','Vargr Alpha','
 INSERT INTO Jouets (NomFR, NomEN, ImagePath) VALUES ('Triceratops','Tricératops','AREMPLIR');
 INSERT INTO Jouets (NomFR, NomEN, ImagePath) VALUES ('Dodo Bird','Oiseau Dodo','AREMPLIR');
 INSERT INTO Jouets (NomFR, NomEN, ImagePath) VALUES ('Snow Marmot','Marmotte Enneignée','AREMPLIR');
--- OK -- IMAGEPATH A REMPLIR
+-- OK -- IMAGEPATH A REMPLIR DES QUE J'AURAIS LES IMAGES
 GO
+
 INSERT INTO Utilisateurs (Mail, Password, Pseudo, Role) VALUES ('anonyme@ano.an','anonymous','Anonyme','User');
 INSERT INTO Utilisateurs (Mail, Password, Pseudo, Role) VALUES ('hercejulien@gmail.com','test','Coupain','Admin');
--- OK --
+-- OK -- ATTENTION LES PASSWORDS SERONT BRUTS (PAS DE CONNEXION POSSIBLE) -- REFAIRE LES UTILISATEURS PAR LA SUITE
 GO
-
-
 
 -- Toutes les possibilités de teams différentes
 INSERT INTO Teams (ClasseId1, ClasseId2, ClasseId3, ClasseId4) VALUES ('1','1','1','1');
@@ -859,6 +861,7 @@ INSERT INTO Teams (ClasseId1, ClasseId2, ClasseId3, ClasseId4) VALUES ('4','5','
 INSERT INTO Teams (ClasseId1, ClasseId2, ClasseId3, ClasseId4) VALUES ('4','5','7','8');
 INSERT INTO Teams (ClasseId1, ClasseId2, ClasseId3, ClasseId4) VALUES ('4','6','7','8');
 INSERT INTO Teams (ClasseId1, ClasseId2, ClasseId3, ClasseId4) VALUES ('5','6','7','8');
+-- OK
 GO
 
 INSERT INTO Skills (ClasseId, NomEN, NomFR, DescFR, DesEN, Cost, Location, ImagePath) VALUES ('1','Ignite','MIse à Feu','Burn the enemy. Inflict 200% ATK DMG over 10 seconds and lower its healing by 16%','Burn the enemy. Inflict 200% ATK DMG over 10 seconds and lower its healing by 16%',3,'Cobo Coast','http://192.168.1.2:8081/Skills/60px-Ignite.png');
@@ -1035,36 +1038,11 @@ INSERT INTO Skills (ClasseId, NomEN, NomFR, DescFR, DesEN, Cost, Location, Image
 INSERT INTO Skills (ClasseId, NomEN, NomFR, DescFR, DesEN, Cost, Location, ImagePath) VALUES ('8','Ancestral Aegis','Bouclier Ancestral','Protect lowest HP teammate. Within 10 seconds heal 3% +6 for each basic attack it receives. Can be triggered up to 15 times','Protect lowest HP teammate. Within 10 seconds heal 3% +6 for each basic attack it receives. Can be triggered up to 15 times',3,'Toto Plain','http://192.168.1.2:8081/Skills/60px-Ancestral_Aegis.png');
 INSERT INTO Skills (ClasseId, NomEN, NomFR, DescFR, DesEN, Cost, Location, ImagePath) VALUES ('8','Fury of the Ancestors','Furie Ancestrale','Inflict 21% +41 attack on all enemies and lower enemy healing by 15%','Inflict 21% +41 attack on all enemies and lower enemy healing by 15%',2,'Toto Plain','http://192.168.1.2:8081/Skills/60px-Fury_of_the_Ancestors.png');
 INSERT INTO Skills (ClasseId, NomEN, NomFR, DescFR, DesEN, Cost, Location, ImagePath) VALUES ('8','Charm Dance','Danse Charmante','Inflict 8.8% +17 attack on all enemies and silence for 1 second','Inflict 8.8% +17 attack on all enemies and silence for 1 second',3,'Cobo Coast','http://192.168.1.2:8081/Skills/60px-Charm_Dance.png');
+-- OK -- ATTENTION AUX IMAGES PATH AVEC "http://192.168.1.2:8081/" -- PREVOIR MODIF POST PUBLICATION WEB
 GO
 
 INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,58,5,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',3)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,2,182,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',5)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,4,112,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',8)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,8,152,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',20)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,10,172,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',22)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,12,142,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',10)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,15,142,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',0)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,20,162,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',0)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,22,162,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',4)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,21,142,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',5)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,30,112,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',8)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,32,122,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',7)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,33,127,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',9)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,36,127,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',7)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,40,128,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',4)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,42,129,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',2)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,58,124,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',10)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,48,121,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',10)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,50,124,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',10)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,52,125,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',10)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,51,127,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',8)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,54,128,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',10)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,60,128,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',10)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,62,112,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',10)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,67,112,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',10)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,70,212,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',10)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,56,212,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',10)
-INSERT INTO Enregistrements (UtilisateurId, BossZoneId, TeamId, ImagePath1,ImagePath2,ImagePath3,ImagePath4, Note) VALUES (1,84,312,'AREMPLIR','AREMPLIR','AREMPLIR','AREMPLIR',10)
+-- PREVOIR PLUS D'ENREGISTREMENTS AVEC DES IMAGEPATH REMPLI POUR IMPORT DE MASSE AVANT PUBLICATION
 GO
 
 INSERT INTO MesTeams (UtilisateurId, TeamId, ZoneId, NomTeam) VALUES (1,5,3,'Team1')
@@ -1139,12 +1117,6 @@ SELECT * FROM V_Enregistrements_EN
 -- PROCEDURES STOCKEES --
 -------------------------
 
---Ajout Follow
-CREATE PROCEDURE SP_AjoutFollow
-	@FollowerId int,
-	@FollowedId  int
-AS INSERT INTO Follow (FollowerId, FollowedId) VALUES (@FollowerId, @FollowedId)
-
 --Ajout utilisateur
 CREATE PROCEDURE SP_AjoutUtilisateur
 	@Pseudo VARCHAR(20),
@@ -1168,7 +1140,7 @@ CREATE PROCEDURE SP_ModifUtilisateur
 	@Actif INT
 AS UPDATE Utilisateurs SET Pseudo = @Pseudo, Mail = @Mail, Role = @Role, Actif = @Actif WHERE Id = @Id
 
---Verification existante Pseudo et match du mot de passe
+--Verification existence Pseudo + match du mot de passe
 CREATE PROCEDURE SP_VerifUtilisateur
 	@Pseudo NVARCHAR(50),
 	@Password NVARCHAR(64),
@@ -1191,7 +1163,7 @@ AS
 	SET @isOk = 0
 	END
 
---Update Token si bon token reçu
+--Update Token d'activation si bon token reçu
 CREATE PROCEDURE SP_UpdateToken
 	@Id INT,
 	@ActivationToken NVARCHAR(MAX),
@@ -1207,7 +1179,7 @@ AS
 		SET @isOK = 0;
 		END
 
--- Renvoi d'un nouveau password auto généré
+-- Renvoi d'un nouveau password auto-généré
 CREATE PROCEDURE SP_NouveauPassword
 	@Mail VARCHAR(MAX),
 	@IsOk bit OUTPUT
@@ -1235,6 +1207,8 @@ DECLARE @minLength INT = 10,
 		SET @IsOk = 1
 	END
 	ELSE SET @IsOk = 0;
+--A FAIRE : Génération de token type JWT avec Id dedans => token par mail avec redirection + verif bon user + renvoyer vers le site pour recréer mot de passe si les infos sont ok.
+--BONUS : possibilité check ip avec présence ip sur site.
 
 -- Renvoi pseudo par mail
 CREATE PROCEDURE SP_RetrievePseudo
@@ -1456,6 +1430,7 @@ EXEC msdb.dbo.sp_send_dbmail @profile_name ='Ulala Admin Profile',
 @recipients = @mail,
 @subject ='Lien d''activation',
 @body = @token
+--Ajouter texte pour corp du mail
 
 ---------------
 -- FONCTIONS --
@@ -1520,6 +1495,7 @@ END
 -------------
 
 -- "ON DELETE" NE supprime pas mais passe la colonne Actif à 0
+-- Certains Trigger sont à supprimer pour avoir des suppression pur sur certaines tables.
 
 CREATE TRIGGER TR_DeleteUtilisateur
     ON Utilisateurs
@@ -1574,6 +1550,7 @@ AS
     SET Note -= (SELECT Note FROM deleted) 
     WHERE Id = (SELECT EnregistrementId FROM deleted)
 
+-- Envoi du Token d'activation par mail lors de l'insertion d'un nouvelle utilisateur
 CREATE TRIGGER TR_SendActivationToken
     ON Utilisateurs
     AFTER INSERT
@@ -1622,11 +1599,12 @@ EXECUTE msdb.dbo.sysmail_add_account_sp
 @email_address = 'adm.ulalastrat@gmail.com',
 @display_name = 'UlalaStrat Admin',
 @username='adm.ulalastrat@gmail.com',
-@password='Cibox77_qa1',
+@password='********',
 @mailserver_name = 'smtp.gmail.com',
 @port = 587,
-@enable_ssl = 1
-  
+@enable_ssl = 1;
+-- Penser à modifier le Mot de passe avant exécution.  
+
 -- Create a Database Mail profile  
 EXECUTE msdb.dbo.sysmail_add_profile_sp  
     @profile_name = 'Ulala Admin Profile',  
@@ -1636,10 +1614,10 @@ EXECUTE msdb.dbo.sysmail_add_profile_sp
 EXECUTE msdb.dbo.sysmail_add_profileaccount_sp  
     @profile_name = 'Ulala Admin Profile',  
     @account_name = 'Ulala Admin',  
-    @sequence_number =1 ;  
+    @sequence_number = 1;  
   
 -- Grant access to the profile to the DBMailUsers role  
 EXECUTE msdb.dbo.sysmail_add_principalprofile_sp  
     @profile_name = 'Ulala Admin Profile',  
     @principal_name = 'public',  
-    @is_default = 1 ;
+    @is_default = 1;
