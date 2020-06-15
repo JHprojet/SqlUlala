@@ -1,0 +1,4 @@
+CREATE PROCEDURE SP_AddClasse
+	@NameFR VARCHAR(50),
+	@NameEN VARCHAR(50)
+AS INSERT INTO Classes (NameFR, NameEN) VALUES (@NameFR,@NameEN)
